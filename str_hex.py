@@ -11,6 +11,29 @@ class str_hex():
     5、1,2,3,4,ab,12(HEX型字符串，每个字节可以省略前面的0)
     '''
 
+    def isHexStr(self, hex_str):
+        '''
+        判断一个字符串是否是Hex型字符串
+        仅做简单判断
+        '''
+        i = 0
+        j=0
+        length = len(hex_str)
+
+        for ch in range(length):
+            if self.__isHex(hex_str[ch]):
+                i += 1
+            elif self.__isSplit(hex_str[ch]):
+                j += 1
+            else:
+                return None
+
+        if j != 0:
+            return 'Split'
+
+        else:
+            return 'NoSplit'
+
     def NoSplitStr2list(self, str, mode='int'):
         '''
         将无分割的16进制字符串转换为数值型列表
@@ -55,18 +78,18 @@ class str_hex():
         for i in range(length):
             if j == 0:
                 str_list.append('')
-                if self._isHex(str[i]):
+                if self.__isHex(str[i]):
                     str_list[list_cnt] = str_list[list_cnt] + str[i]
                     j += 1
                 else:
                     # 第一个字符不是数值型字符
                     return None
             elif j == 1:
-                if self._isHex(str[i]):
+                if self.__isHex(str[i]):
                     # 第二个字符是数值型字符
                     str_list[list_cnt] = str_list[list_cnt] + str[i]
                     j += 1
-                elif self._isSplit(str[i]):
+                elif self.__isSplit(str[i]):
                     # 第二个字符是分隔符
                     j = 0
                     # 在前面补0
@@ -81,7 +104,7 @@ class str_hex():
                 else:
                     return None
             elif j == 2:
-                if self._isSplit(str[i]):
+                if self.__isSplit(str[i]):
                     j = 0
                     if(mode == 'int'):
                         str_list[list_cnt] = int(str_list[list_cnt],base=16)
@@ -103,7 +126,7 @@ class str_hex():
         return str_list
 
 
-    def _isHex(self, str):
+    def __isHex(self, str):
         if str >= 'a' and str <= 'f':
             return True
         elif str >= 'A' and str <= 'F':
@@ -113,7 +136,7 @@ class str_hex():
         else:
             return False
 
-    def _isSplit(self, str):
+    def __isSplit(self, str):
         if str == ' ':
             return True
         elif str == ',':
@@ -123,13 +146,12 @@ class str_hex():
 
 if __name__ == "__main__":
     a = '01,02,3,5,9 ab bc c,'
-    c = str_hex()
     print("带分割符的字符串")
-    print(c.SplitStr2list(a))
+    print(str_hex().SplitStr2list(a))
     print("bytes型")
-    print(c.SplitStr2list(a, 'bytes'))
+    print(str_hex().SplitStr2list(a, 'bytes'))
     a = '01020304050607081a1bbccdef'
     print('不带分割符的字符串')
-    print(c.NoSplitStr2list(a))
+    print(str_hex().NoSplitStr2list(a))
     print("bytes")
-    print(c.NoSplitStr2list(a,'bytes'))
+    print(str_hex().NoSplitStr2list(a,'bytes'))
