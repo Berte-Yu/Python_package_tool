@@ -1,5 +1,6 @@
 import uart_data_handler_form
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtGui import QColor
 import sys
 from str_hex import str_hex
 import para_cmd
@@ -15,7 +16,8 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
         # 增加槽函数
         self.pushButton_add.clicked.connect(self.clicked_add_para_button)
         self.pushButton_clear.clicked.connect(self.clicked_clear_button)
-    
+        self.pushButton_del.clicked.connect(self.clicked_del_button)
+
     def clicked_add_para_button(self):
         '''
         点击添加按键的操作
@@ -91,15 +93,7 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
                 QtWidgets.QMessageBox.warning(self,'参数输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
                 return
 
-        #命令和参数均添加完毕
-        int_list_para_cmd = self.cmd_para.completeCmdPara()
-        show_str = ''
-        
-        for val in int_list_para_cmd:
-            show_str += '%02X'%val
-            show_str += ' '
-        
-        self.textBrowser_display.setText(show_str)
+        self.show_str()
 
     def clicked_clear_button(self):
         # 清空参数字节
@@ -110,6 +104,25 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
         self.lineEdit_Para_data.setText('')
         self.lineEdit_para_type.setText('')
         self.textBrowser_display.setText('')
+    
+    def clicked_del_button(self):
+        self.cmd_para.del_para()
+        self.show_str()
+
+    def show_str(self):
+        #命令和参数均添加完毕
+        int_list_para_cmd = self.cmd_para.completeCmdPara()
+
+        if int_list_para_cmd == None:
+            return
+
+        show_str = ''
+        
+        for val in int_list_para_cmd:
+            show_str += '%02X'%val
+            show_str += ' '
+        
+        self.textBrowser_display.setText(show_str)
 
     def __GetStrlist(self,hexstr):
         list_str = str_hex().isHexStr(hexstr)

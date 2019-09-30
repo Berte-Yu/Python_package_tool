@@ -83,12 +83,23 @@ class PARA_CMD(PARA):
     def get_cmd_para(self):
         return self.cmd_para
 
+    def del_para(self):
+        # 删除最后一个参数
+        length = len(self.cmd_para['para'])
+        if length == 0:
+            return
+        
+        self.cmd_para['para'] = self.cmd_para['para'][:-1]
+
     def completeCmdPara(self):
         '''
         将命令和参数组装成最终的数值列表
         包头+长度+校验+命令+参数1+参数2+...+CRC16
         '''
         package = []
+
+        if len(self.cmd_para['cmd']) == 0:
+            return None
 
         # 加入包头
         package.append(self.header) 
@@ -139,6 +150,7 @@ class PARA_CMD(PARA):
         package.append(crc_16&0xff)
 
         return package
+
 
 if __name__ == "__main__":
     cmd = [0x70,0x00,0x02]
