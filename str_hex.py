@@ -116,8 +116,14 @@ class str_hex():
             else:
                 return None
 
-        if j == 1:
+        if j == 1 :
             str_list[list_cnt] = '0' + str_list[list_cnt] 
+            if(mode == 'int'):
+                str_list[list_cnt] = int(str_list[list_cnt],base=16)
+            elif(mode == 'bytes'):
+                str_list[list_cnt] = bytes.fromhex(str_list[list_cnt])
+
+        elif j == 2:
             if(mode == 'int'):
                 str_list[list_cnt] = int(str_list[list_cnt],base=16)
             elif(mode == 'bytes'):
