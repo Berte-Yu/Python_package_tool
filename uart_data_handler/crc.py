@@ -1,6 +1,6 @@
 #coding:utf-8
 
-def crc_16_ccit_false(data, offset, length):
+def crc_16_ccit_false(data, start, end):
     '''
     poly: 0x1021
     init: 0xffff
@@ -11,7 +11,7 @@ def crc_16_ccit_false(data, offset, length):
     POLY16 = 0x1021
     crc = 0xffff
 
-    for i in range(offset, length):
+    for i in range(start, end):
         crc ^= (data[i]<<8)&0xffff
 
         for j in range(8):

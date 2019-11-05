@@ -144,7 +144,8 @@ class PARA_CMD(PARA):
         # 插入负载校验
         package.insert(3, (check+(self.protocol<<4)))
 
-        crc_16 = crc_16_ccit_false(package, 4, len(package))
+        # CRC
+        crc_16 = crc_16_ccit_false(package, 1, len(package))
 
         package.append((crc_16&0xff00)>>8)
         package.append(crc_16&0xff)

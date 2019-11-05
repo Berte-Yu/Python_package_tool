@@ -49,7 +49,11 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
             # 只添加命令
             # 将命令字符串转换成int列表
             self.list_cmd = self.__GetStrlist(cmd_str)
-        
+            
+            if self.list_cmd == None:
+                QtWidgets.QMessageBox.warning(self,'命令输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
+                return
+
             if len(self.list_cmd) == 0:
                 # 出错
                 QtWidgets.QMessageBox.warning(self,'命令输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
@@ -63,7 +67,11 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
             # 添加命令和参数
             # 将命令字符串转换成int列表
             self.list_cmd = self.__GetStrlist(cmd_str)
-        
+            
+            if self.list_cmd == None:
+                QtWidgets.QMessageBox.warning(self,'命令输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
+                return
+
             if len(self.list_cmd) == 0:
                 # 出错
                 QtWidgets.QMessageBox.warning(self,'命令输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
@@ -72,6 +80,10 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
             # 将参数类型字符串转换成int列表
             self.list_para_type = self.__GetStrlist(para_type_str)
 
+            if self.list_para_type == None:
+                QtWidgets.QMessageBox.warning(self,'参数类型输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
+                return
+
             if len(self.list_para_type) == 0:
                 # 出错
                 QtWidgets.QMessageBox.warning(self,'参数类型输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
@@ -79,6 +91,10 @@ class uart_data_handler_UI(QtWidgets.QWidget, uart_data_handler_form.Ui_MainWind
 
             # 将参数数据字符串转换成int列表
             self.list_para_data = self.__GetStrlist(para_data_str)
+
+            if self.list_para_data == None:
+                QtWidgets.QMessageBox.warning(self,'参数数据输入错误', '请正确输入。', QtWidgets.QMessageBox.Ok)
+                return
 
             if len(self.list_para_data) == 0:
                 # 出错
